@@ -2,23 +2,57 @@
 
 ### Introduction
 
-- overview of project
+- overview of project (**Cyan**)
   - agent orchestration TUI
 - brief intro of the members
-- live demo by starting a ralph loop with PRD pre-made
+- introduction to ralph, the methodology (**Frank**)
+- live demo by starting a ralph loop with PRD pre-made (**Cyan**)
 
-### Problems
+### Problems & solutions (**Asia**)
 
-### Solutions
+> problems of opencode or agentic coding in general without ralph
+
+- opencode
+  - you cannot decouple the server and the tui. whenever you quit the TUI, the agent will stop too
+    - solution: we built a TUI + daemon that allows the agent to run despite the tui is not running
+  - Its hard to work on multiple projects at the same time even with an IDE
+    - solution: ralph tui gives one single view for all the projects you are working
+- methodology
+  - the context problem: trying to fix everything into one session is bad for agent. more noices means more hallucination and worse performance
+  - vagueness of the prompts: with normal prompting or plan mode. It is declarative instead of imperative so that the agent can take different paths to achieve the same thing which cloud go out of the hand
+
+### Product overview (**Kevin**)
+
+- Plan
+- execute
+- review
 
 ### Technical Details
 
-### Showcases
+- Tech stack (**Frank**)
+  - Typescript
+  - opentui
+  - bun
+- Daemon (**Cyan**)
+- npm packaging (**Cyan**)
+- Streaming service for background execution and live log (**Fahim**)
+- `.ralph/` workspace & files (**Asia**)
+- CLI (**Patrick**)
+- ...alex could pick up another technical details to talk about (**Alex**)
+
+### Showcases (**Alex** & **Fahim**)
 
 - show plan view
 - show working on multiple projects at once
 - execution view & review view
+- show the final result for the loop started in the beginning
 
-### Future plan
+### Future plan (**Patrick**)
 
- <!-- things we didn't have time to get to but could potentially build in the future -->
+> things we didn't have time to get to but could potentially build in the future
+
+- better review view
+- on demand prompts during execution
+- add more feature parity to opencode
+  - questions
+  - manual skill activation
