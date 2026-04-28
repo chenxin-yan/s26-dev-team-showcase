@@ -37,6 +37,12 @@
 - npm packaging (**Cyan**)
 - Streaming service for background execution and live log (**Fahim**)
 - `.ralph/` workspace & files (**Asia**)
+  - instead of treating an agent session as just one long conversation, we give each session its own scaffolded workspace on disk.
+  - in the workspace, we create a few specific files with different roles
+    - SPEC.md for requirements
+    - PROMPT.md for execution rules
+    - progress.md for memory and handoff
+    - task files like prd.json for planning state
 - CLI (**Patrick**)
 - ...alex could pick up another technical details to talk about (**Alex**)
 
