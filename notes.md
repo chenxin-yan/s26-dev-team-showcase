@@ -33,9 +33,11 @@
   - Typescript
   - opentui
   - bun
-- Daemon (**Cyan**)
-- npm packaging (**Cyan**)
-- Streaming service for background execution and live log (**Fahim**)
+- Daemon
+  - Streaming service for background execution and live log (**Fahim**)
+  - Shared opencode runtime (**Alex**)
+    - we run one opencode process across every workspace
+    - each instance gets its own event stream tagged by directory
 - `.ralph/` workspace & files (**Asia**)
   - instead of treating an agent session as just one long conversation, we give each session its own scaffolded workspace on disk.
   - in the workspace, we create a few specific files with different roles
@@ -44,9 +46,7 @@
     - progress.md for memory and handoff
     - task files like prd.json for planning state
 - CLI (**Patrick**)
-- Shared opencode runtime (**Alex**)
-  - we run one opencode process across every workspace
-  - each instance gets its own event stream tagged by directory
+- npm packaging (**Cyan**)
 
 ### Showcases (**Alex** & **Fahim**)
 
