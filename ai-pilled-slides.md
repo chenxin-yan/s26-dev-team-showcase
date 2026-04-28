@@ -1,6 +1,6 @@
 ---
 title: '<span style="color: palette:green">Ralph</span> · Agent orchestration in the terminal'
-sub_title: '_Dev team showcase — S26_'
+sub_title: "_Dev team showcase — S26_"
 event: "Tech@NYU"
 date: "Spring 2026"
 authors:
@@ -25,42 +25,7 @@ options:
   list_item_newlines: 2
 ---
 
-Meet the team
-=============
-
-<!-- alignment: center -->
-
-<span style="color: palette:subtext0">Replace placeholders before you present.</span>
-
-<!-- column_layout: [1, 1, 1] -->
-
-<!-- column: 0 -->
-
-<span style="color: palette:teal">01</span>
-
-- **<NAME 1>**
-- `<ROLE>`
-
-<!-- column: 1 -->
-
-<span style="color: palette:mauve">02</span>
-
-- **<NAME 2>**
-- `<ROLE>`
-
-<!-- column: 2 -->
-
-<span style="color: palette:peach">03</span>
-
-- **<NAME 3>**
-- `<ROLE>`
-
-<!-- reset_layout -->
-
-<!-- end_slide -->
-
-What is Ralph?
-==============
+# What is Ralph?
 
 <!-- list_item_newlines: 1 -->
 
@@ -73,8 +38,7 @@ What is Ralph?
 
 <!-- end_slide -->
 
-Ralph, the methodology
-=======================
+# Ralph, the methodology
 
 > [!important]
 > **Small sessions, tight tasks** — less noise, fewer hallucinations, cleaner handoffs.
@@ -91,28 +55,25 @@ Ralph, the methodology
 
 <span style="color: palette:yellow">Live</span>
 
-Live demo
-=========
+# Live demo
 
 - Spin up a **Ralph loop** with a pre-baked PRD
 - Watch **plan → run → log** without babysitting the TUI
 
 <!-- end_slide -->
 
-Problems with agentic coding today
-===================================
+# Problems with agentic coding today
 
 | <span style="color: palette:sky">Lens</span> | <span style="color: palette:text">What goes wrong</span> |
-| --- | --- |
-| **Tooling** | Server + TUI fused — quit the UI, kill the agent |
-| **Tooling** | Multi-repo work — context scattered across windows |
-| **Methodology** | Mega-sessions — context rot and weaker verification |
-| **Methodology** | Vague / declarative goals — many paths, easy drift |
+| -------------------------------------------- | -------------------------------------------------------- |
+| **Tooling**                                  | Server + TUI fused — quit the UI, kill the agent         |
+| **Tooling**                                  | Multi-repo work — context scattered across windows       |
+| **Methodology**                              | Mega-sessions — context rot and weaker verification      |
+| **Methodology**                              | Vague / declarative goals — many paths, easy drift       |
 
 <!-- end_slide -->
 
-Opencode pain #1: TUI = agent lifetime
-========================================
+# Opencode pain #1: TUI = agent lifetime
 
 > [!warning]
 > The agent's lifetime is tied to the **foreground TUI** — no true background mode.
@@ -122,8 +83,7 @@ Opencode pain #1: TUI = agent lifetime
 
 <!-- end_slide -->
 
-Our fix: TUI + daemon
-======================
+# Our fix: TUI + daemon
 
 > [!tip]
 > **Split control plane from data plane** — `ralphd` keeps state; the TUI attaches when you want.
@@ -140,8 +100,7 @@ bun run src/cli.ts daemon stop
 
 <!-- end_slide -->
 
-Opencode pain #2: multi-project workflow
-========================================
+# Opencode pain #2: multi-project workflow
 
 > [!warning]
 > Every repo becomes its **own island** of terminals, tabs, and agent state.
@@ -151,8 +110,7 @@ Opencode pain #2: multi-project workflow
 
 <!-- end_slide -->
 
-Our fix: one TUI for all projects
-==================================
+# Our fix: one TUI for all projects
 
 > [!tip]
 > **One mental model** everywhere — same plan / execute / review flow per workspace.
@@ -162,8 +120,7 @@ Our fix: one TUI for all projects
 
 <!-- end_slide -->
 
-Methodology pain #1: the context problem
-=========================================
+# Methodology pain #1: the context problem
 
 > [!caution]
 > Stuffing everything into **one session** trades convenience for **signal-to-noise**.
@@ -173,8 +130,7 @@ Methodology pain #1: the context problem
 
 <!-- end_slide -->
 
-Methodology pain #2: declarative prompts drift
-===============================================
+# Methodology pain #2: declarative prompts drift
 
 > [!caution]
 > “Build the feature” has **many valid implementations** — agents wander without guardrails.
@@ -184,8 +140,7 @@ Methodology pain #2: declarative prompts drift
 
 <!-- end_slide -->
 
-Product overview: Plan → Execute → Review
-==========================================
+# Product overview: Plan → Execute → Review
 
 <!-- column_layout: [1, 1, 1] -->
 
@@ -214,45 +169,41 @@ Product overview: Plan → Execute → Review
 
 <!-- end_slide -->
 
-Tech stack
-==========
+# Tech stack
 
-| Layer | Choice |
-| --- | --- |
-| Language | **TypeScript** |
-| UI | **OpenTUI** — `@opentui/core`, `@opentui/react` |
-| Runtime | **Bun** |
-| Monorepo | **Turborepo** (dev orchestration) |
+| Layer    | Choice                                          |
+| -------- | ----------------------------------------------- |
+| Language | **TypeScript**                                  |
+| UI       | **OpenTUI** — `@opentui/core`, `@opentui/react` |
+| Runtime  | **Bun**                                         |
+| Monorepo | **Turborepo** (dev orchestration)               |
 
 <!-- end_slide -->
 
-The daemon
-==========
+# The daemon
 
 > [!note]
 > **`ralphd`** is the source of truth for sessions, sockets, and persistence.
 
-| Resource | Path / role |
-| --- | --- |
-| Socket | `~/.ralph/ralphd.sock` |
-| State DB | `~/.ralph/state.sqlite` |
-| Role | Spawn runs, stream output, survive without the TUI |
+| Resource | Path / role                                        |
+| -------- | -------------------------------------------------- |
+| Socket   | `~/.ralph/ralphd.sock`                             |
+| State DB | `~/.ralph/state.sqlite`                            |
+| Role     | Spawn runs, stream output, survive without the TUI |
 
 <!-- end_slide -->
 
-Inside `ralphd`: one runtime, many sessions
-============================================
+# Inside `ralphd`: one runtime, many sessions
 
 > [!tip]
-> *n* agents, *n* repos — **one** opencode process.
+> _n_ agents, _n_ repos — **one** opencode process.
 
 - We share a single opencode runtime across every workspace
 - Each instance gets its own event stream, tagged by directory
 
 <!-- end_slide -->
 
-Streaming service
-=================
+# Streaming service
 
 - **Background execution** — detach the TUI without losing the agent
 - **Live log fan-in** — stdout/stderr surfaces in the client
@@ -260,18 +211,17 @@ Streaming service
 
 <!-- end_slide -->
 
-`.ralph/` workspace
-===================
+# `.ralph/` workspace
 
 > [!note]
 > The **contract** between humans and agents lives on disk — inspectable, diffable, versioned.
 
-| File | Job |
-| --- | --- |
-| `SPEC.md` | What you are building |
-| `prd.json` | Task list + pass / fail |
-| `progress.md` | Append-only iteration log |
-| `PROMPT.md` | One-task-per-session agent rules |
+| File          | Job                              |
+| ------------- | -------------------------------- |
+| `SPEC.md`     | What you are building            |
+| `prd.json`    | Task list + pass / fail          |
+| `progress.md` | Append-only iteration log        |
+| `PROMPT.md`   | One-task-per-session agent rules |
 
 ```markdown +line_numbers
 1. SPEC.md — what you're building
@@ -281,8 +231,7 @@ Streaming service
 
 <!-- end_slide -->
 
-npm packaging
-=============
+# npm packaging
 
 > [!tip]
 > Ship it like any other CLI — **`@techatnyu/ralph`** on the public registry.
@@ -299,8 +248,7 @@ npm packaging
 
 <span style="color: palette:mauve">Showcase</span>
 
-Showcase: Plan view
-===================
+# Showcase: Plan view
 
 - Trace **PRD → task pick → spec context** in the TUI
 - Call out how **`prd.json`** steers the next session
@@ -313,8 +261,7 @@ Showcase: Plan view
 
 <span style="color: palette:mauve">Showcase</span>
 
-Showcase: Multiple projects at once
-====================================
+# Showcase: Multiple projects at once
 
 - Flip between workspaces **without losing narrative**
 - Compare **agent state** side-by-side in one surface
@@ -327,16 +274,14 @@ Showcase: Multiple projects at once
 
 <span style="color: palette:mauve">Showcase</span>
 
-Showcase: Execution & Review views
-===================================
+# Showcase: Execution & Review views
 
 - **Execution** — streaming output, background-friendly runs
 - **Review** — per-session diffs of every file the agent touched
 
 <!-- end_slide -->
 
-What's next
-===========
+# What's next
 
 > [!note]
 > Honest backlog — the **next layer of polish**, not vapor.
@@ -359,8 +304,7 @@ What's next
 
 <span style="color: palette:green">Thank you</span>
 
-Thanks / Q&A
-============
+# Thanks / Q&A
 
 - Repo: **`TechAtNYU/ralph`**
 - <span style="color: palette:subtext0">We’d love your questions.</span>
