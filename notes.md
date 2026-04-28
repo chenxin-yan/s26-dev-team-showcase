@@ -7,6 +7,7 @@
 - brief intro of the members
 - introduction to ralph, the methodology (**Frank**)
 - live demo by starting a ralph loop with PRD pre-made (**Cyan**)
+  - some next.js app
 
 ### Problems & solutions (**Asia**)
 
@@ -23,9 +24,17 @@
 
 ### Product overview (**Kevin**)
 
+- diagram:
 - Plan
 - execute
 - review
+
+### Showcases (**Alex** & **Fahim**)
+
+- TODO: add screenshots before presentation
+- show plan view and working on multiple projects at once (**Fahim**)
+  - run ralph in two different directories
+- execution view & review view (**Alex**)
 
 ### Technical Details
 
@@ -34,6 +43,7 @@
   - opentui
   - bun
 - Daemon
+  - daemon intro: what is it (**Fahim**)
   - Streaming service for background execution and live log (**Fahim**)
   - Shared opencode runtime (**Alex**)
     - we run one opencode process across every workspace
@@ -48,19 +58,16 @@
 - CLI (**Patrick**)
 - npm packaging (**Cyan**)
 
-### Showcases (**Alex** & **Fahim**)
-
-- show plan view
-- show working on multiple projects at once
-- execution view & review view (**Alex**)
-- show the final result for the loop started in the beginning
-
 ### Future plan (**Patrick**)
 
 > things we didn't have time to get to but could potentially build in the future
 
 - better review view
-- on demand prompts during execution
+  - curr: just viewing diffs
+  - want: interactive rebase
+- on demand prompts during execution (steering)
 - add more feature parity to opencode
-  - questions
   - manual skill activation
+  - general commands: /reset, /undo, etc.
+
+- show the final result for the loop started in the beginning (**Cyan**)
