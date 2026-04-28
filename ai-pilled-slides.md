@@ -240,6 +240,17 @@ The daemon
 
 <!-- end_slide -->
 
+Inside `ralphd`: one runtime, many sessions
+============================================
+
+> [!tip]
+> *n* agents, *n* repos — **one** opencode process.
+
+- We share a single opencode runtime across every workspace
+- Each instance gets its own event stream, tagged by directory
+
+<!-- end_slide -->
+
 Streaming service
 =================
 
@@ -320,7 +331,7 @@ Showcase: Execution & Review views
 ===================================
 
 - **Execution** — streaming output, background-friendly runs
-- **Review** — what landed this iteration + what’s queued next
+- **Review** — per-session diffs of every file the agent touched
 
 <!-- end_slide -->
 

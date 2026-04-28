@@ -44,13 +44,15 @@
     - progress.md for memory and handoff
     - task files like prd.json for planning state
 - CLI (**Patrick**)
-- ...alex could pick up another technical details to talk about (**Alex**)
+- Shared opencode runtime (**Alex**)
+  - we run one opencode process across every workspace
+  - each instance gets its own event stream tagged by directory
 
 ### Showcases (**Alex** & **Fahim**)
 
 - show plan view
 - show working on multiple projects at once
-- execution view & review view
+- execution view & review view (**Alex**)
 - show the final result for the loop started in the beginning
 
 ### Future plan (**Patrick**)
