@@ -15,6 +15,29 @@ theme:
       separator: true
       padding_top: 1
       padding_bottom: 2
+      font_size: 2
+    intro_slide:
+      title:
+        font_size: 3
+      subtitle:
+        colors:
+          foreground: palette:lavender
+    headings:
+      h3:
+        prefix: ""
+        colors:
+          foreground: palette:lavender
+        bold: true
+    bold:
+      colors:
+        foreground: palette:text
+    italics:
+      colors:
+        foreground: palette:subtext0
+    code:
+      padding:
+        horizontal: 3
+        vertical: 1
     default:
       margin:
         percent: 7
@@ -26,6 +49,8 @@ options:
 <!-- jump_to_middle -->
 
 <!-- alignment: center -->
+
+<!-- no_footer -->
 
 # Live demo
 
@@ -145,12 +170,12 @@ options:
 
 # Tech stack
 
-| Layer    | Choice                                          |
-| -------- | ----------------------------------------------- |
-| Language | **TypeScript**                                  |
+| Layer    | Choice                                         |
+| -------- | ---------------------------------------------- |
+| Language | **TypeScript**                                 |
 | UI       | **OpenTUI:** `@opentui/core`, `@opentui/react` |
-| Runtime  | **Bun**                                         |
-| Monorepo | **Turborepo** (dev orchestration)               |
+| Runtime  | **Bun**                                        |
+| Monorepo | **Turborepo** (dev orchestration)              |
 
 <!-- end_slide -->
 
@@ -278,6 +303,8 @@ await Bun.build({
 
 <!-- alignment: center -->
 
+<!-- no_footer -->
+
 <span style="color: palette:mauve">Showcase</span>
 
 # Showcase: Plan view
@@ -290,6 +317,8 @@ await Bun.build({
 <!-- jump_to_middle -->
 
 <!-- alignment: center -->
+
+<!-- no_footer -->
 
 <span style="color: palette:mauve">Showcase</span>
 
@@ -338,12 +367,10 @@ await Bun.build({
 
 # What's next
 
-> [!note]
-> Honest backlog: the **next layer of polish**, not vapor.
-
 - **Review surface:** richer diffs, tests, approvals inline
 - **Prompt injection mid-run:** steer without restarting the loop
-- **Opencode parity:** Q&A flows, manual skill activation
+- **Opencode parity:** manual skill activation and custom commands
+- **Better interface:** need more polished UI/UX
 
 <!-- end_slide -->
 
@@ -357,12 +384,9 @@ await Bun.build({
 
 <!-- no_footer -->
 
-<span style="color: palette:green">Thank you</span>
-
 # Thanks / Q&A
 
 - Repo: **`TechAtNYU/ralph`**
-- <span style="color: palette:subtext0">We’d love your questions.</span>
 
 <!-- reset_layout -->
 
