@@ -1,22 +1,43 @@
 ---
 title: '<span style="color: palette:green">Ralph</span> · Agent orchestration in the terminal'
-sub_title: "_Dev team showcase — S26_"
+sub_title: "_Dev team showcase · S26_"
 event: "Tech@NYU"
 date: "Spring 2026"
-authors:
-  - "<NAME 1> — <ROLE>"
-  - "<NAME 2> — <ROLE>"
-  - "<NAME 3> — <ROLE>"
 theme:
   name: catppuccin-mocha
   override:
     footer:
       style: progress_bar
-      character: "▌"
+      character: "▁"
+      colors:
+        foreground: palette:lavender
     slide_title:
       separator: true
       padding_top: 1
       padding_bottom: 2
+      font_size: 2
+    intro_slide:
+      title:
+        font_size: 3
+      subtitle:
+        colors:
+          foreground: palette:lavender
+    headings:
+      h3:
+        prefix: ""
+        colors:
+          foreground: palette:lavender
+        bold: true
+    bold:
+      colors:
+        foreground: palette:text
+    italics:
+      colors:
+        foreground: palette:subtext0
+    code:
+      padding:
+        horizontal: 3
+        vertical: 1
     default:
       margin:
         percent: 7
@@ -25,40 +46,47 @@ options:
   list_item_newlines: 2
 ---
 
-# What is Ralph?
+<!-- jump_to_middle -->
 
-<!-- list_item_newlines: 1 -->
+<!-- alignment: center -->
 
-> [!tip]
-> A **daemon-backed** TUI so agents keep working after you detach.
+<!-- no_footer -->
 
-- <span style="color: palette:sky">Orchestration</span> — one loop across workspaces, not one-off chats
-- <span style="color: palette:green">Resilience</span> — `ralphd` owns runs; the TUI is a thin client
-- <span style="color: palette:yellow">Visibility</span> — single dashboard for every project in flight
+# Live demo
+
+- Spin up a **Ralph loop** with a pre-baked PRD
+- Build a habit tracking web app
 
 <!-- end_slide -->
 
 # Ralph, the methodology
 
 > [!important]
-> **Small sessions, tight tasks** — less noise, fewer hallucinations, cleaner handoffs.
+> **One task per session.** Read state from disk → execute → write state back → loop.
 
-- <span style="color: palette:lavender">Plan → execute → review</span> as the default rhythm
-- **One task per session** — select from `prd.json`, ship, signal completion
-- **`progress.md` append-only** — each iteration leaves breadcrumbs for the next
+- <span style="color: palette:lavender">Files on disk are the contract</span>: `SPEC.md`, `prd.json`, `progress.md` are the agent's only memory between sessions
+- <span style="color: palette:green">Each iteration starts fresh</span>: no carry-over context; the agent rebuilds state by reading the files
+
+## **The loop, per iteration:**
+
+1. **Read** `SPEC.md`, `prd.json`, `progress.md` to rebuild context
+2. **Pick** one open task from `prd.json` (where `passed: false`)
+3. **Implement & verify:** tests, type checks, lint
+4. **Append** an entry to `progress.md`, mark the task `passed`, commit
+5. **Signal** `RALPH_TASK_COMPLETE` → next iteration, fresh context
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# What is Ralph, the TUI
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<span style="color: palette:yellow">Live</span>
+> [!tip]
+> A **daemon-backed** TUI so agents keep working after you detach.
 
-# Live demo
-
-- Spin up a **Ralph loop** with a pre-baked PRD
-- Watch **plan → run → log** without babysitting the TUI
+- <span style="color: palette:sky">Orchestration</span>: one loop across workspaces, not one-off chats
+- <span style="color: palette:green">Resilience</span>: `ralphd` owns runs; the TUI is a thin client
+- <span style="color: palette:yellow">Visibility</span>: single dashboard for every project in flight
 
 <!-- end_slide -->
 
@@ -102,89 +130,95 @@ options:
 
 > **Solution**
 
-- Ralph uses **one task per session**
-- Work is grounded in **structured artifacts on disk**
-- `PROMPT.md`, `SPEC.md`, `prd.json`, and `progress.md` make the workflow **explicit and reproducible**
+- **One task per session:** isolated context, no bloat, fewer hallucinations
+- **Pre-planned, actionable steps** in `prd.json`. Execution is instruction-following, not reasoning
+- **Plan with a smart model, execute with a cheap one:** same quality, lower cost
+- Workflow grounded in `PROMPT.md`, `SPEC.md`, `prd.json`, `progress.md`. **Explicit and reproducible.**
 
 <!-- reset_layout -->
 
 <!-- end_slide -->
 
-# Product overview: Plan → Execute → Review
+# Product overview: structured agent workflow
 
-<!-- column_layout: [1, 1, 1] -->
+> [!tip]
+> Agentic coding needs a workflow: **define the work, manage the work, review the work**.
 
-<!-- column: 0 -->
+| <span style="color: palette:sky">Tab</span> | <span style="color: palette:text">Product job</span> |
+| ------------------------------------------- | ---------------------------------------------------- |
+| **Plan**                                    | Turn an idea / PRD into `SPEC.md` + `prd.json`       |
+| **Execute**                                 | Convert plan files into visible task workstreams     |
+| **Review**                                  | Inspect output, then accept, revise, or continue     |
 
-### <span style="color: palette:sapphire">Plan</span>
-
-- Shape **tasks** + acceptance in `prd.json`
-- Ground truth in **`SPEC.md`**
-
-<!-- column: 1 -->
-
-### <span style="color: palette:green">Execute</span>
-
-- **`ralphd`** drives the loop
-- **Streaming logs** while work runs in the background
-
-<!-- column: 2 -->
-
-### <span style="color: palette:peach">Review</span>
-
-- Inspect **output** before the next iteration
-- **Roadmap:** richer diff / test surfacing in-review
-
-<!-- reset_layout -->
+- <span style="color: palette:lavender">From vague prompt → scoped tasks → reviewed changes</span>
+- The human keeps control while the agent moves through scoped tasks
 
 <!-- end_slide -->
 
 # Tech stack
 
-| Layer    | Choice                                          |
-| -------- | ----------------------------------------------- |
-| Language | **TypeScript**                                  |
-| UI       | **OpenTUI** — `@opentui/core`, `@opentui/react` |
-| Runtime  | **Bun**                                         |
-| Monorepo | **Turborepo** (dev orchestration)               |
+| Layer    | Choice                                         |
+| -------- | ---------------------------------------------- |
+| Language | **TypeScript**                                 |
+| UI       | **OpenTUI:** `@opentui/core`, `@opentui/react` |
+| Runtime  | **Bun**                                        |
+| Monorepo | **Turborepo** (dev orchestration)              |
 
 <!-- end_slide -->
 
 # The daemon
 
 > [!note]
-> **`ralphd`** is the source of truth for sessions, sockets, and persistence.
+> **`ralphd`:** a long-running daemon that is the single source of truth for all agent work.
 
-| Resource | Path / role                                        |
-| -------- | -------------------------------------------------- |
-| Socket   | `~/.ralph/ralphd.sock`                             |
-| State DB | `~/.ralph/state.sqlite`                            |
-| Role     | Spawn runs, stream output, survive without the TUI |
+- **Omnipotent across directories:** todo apps, trip planners, any project you've ever worked on — `ralphd` manages them all
+- **Owns the agent loop:** execution continues whether or not a UI is attached
+- **Persists state** in `~/.ralph/state.sqlite`, communicates over `~/.ralph/ralphd.sock`
+
+```
+  ┌─ ralphd (long-running daemon) ─────────────────────────┐
+  │                                                         │
+  │   ~/todo-app ──┐                                        │
+  │                │                                        │
+  │   ~/planner ───┼──→  agent loop  ──→  state.sqlite      │
+  │                │      (per dir)                          │
+  │   ~/client  ───┘                                        │
+  │                                                         │
+  │   ralphd.sock  ←── TUIs subscribe here                  │
+  └─────────────────────────────────────────────────────────┘
+```
 
 <!-- end_slide -->
 
-# Inside `ralphd`: one runtime, many sessions
+# The TUI
 
-> [!tip]
-> _n_ agents, _n_ repos — **one** opencode process.
+> [!note]
+> **The TUI is purely a UI layer.** It holds no state — it subscribes to `ralphd` over a socket and renders what it's told.
 
-- We share a single opencode runtime across every workspace
-- Each instance gets its own event stream, tagged by directory
+- **Stateless client:** all information comes from the daemon, the TUI just displays it
+- **Multiplexable:** spin up N TUIs on the same project — the daemon doesn't care
+- **Disposable:** close the TUI and the agent keeps running. Reattach whenever you want
 
-<!-- end_slide -->
-
-# Streaming service
-
-- **Background execution** — detach the TUI without losing the agent
-- **Live log fan-in** — stdout/stderr surfaces in the client
-- **Multi-project fan-out** — same pipeline for every workspace
+```
+                ┌─── TUI (kitchen laptop) ───┐
+                │    subscribe ↓              │
+                └────────────────────────────-┘
+                          │
+  ralphd.sock ◄───────────┼────────────────────┐
+       │                  │                    │
+       ▼                  │                    │
+  ┌─ ralphd ─┐    ┌─── TUI (desk) ───┐   ┌─── TUI (ssh) ───┐
+  │ agent loop│    │   subscribe ↓    │   │   subscribe ↓    │
+  │ (running) │    └──────────────────┘   └──────────────────┘
+  └───────────┘
+```
 
 <!-- end_slide -->
 
 # `.ralph/` workspace
 
 > [!note]
-> The **contract** between humans and agents lives on disk — inspectable, diffable, versioned.
+> The **contract** between humans and agents lives on disk: inspectable, diffable, versioned.
 
 | File          | Job                              |
 | ------------- | -------------------------------- |
@@ -194,9 +228,9 @@ options:
 | `PROMPT.md`   | One-task-per-session agent rules |
 
 ```markdown +line_numbers
-1. SPEC.md — what you're building
-2. prd.json — task list
-3. progress.md — append-only log
+1. SPEC.md: what you're building
+2. prd.json: task list
+3. progress.md: append-only log
 ```
 
 <!-- end_slide -->
@@ -204,11 +238,31 @@ options:
 # npm packaging
 
 > [!tip]
-> Ship it like any other CLI — **`@techatnyu/ralph`** on the public registry.
+> **`npm i -g @techatnyu/ralph`:** native binaries, no Node runtime, no postinstall scripts.
 
-- **Package:** `@techatnyu/ralph` · `publishConfig.access: public`
-- **UX:** end users run `ralph`; packaged builds can **spawn `ralphd`** automatically
-- **Workspace link:** `@techatnyu/ralphd` via `workspace:*` in dev
+- **Pattern:** meta-package + per-platform packages via `optionalDependencies`
+- **Bun compiles** `ralph` (TUI) and `ralphd` (daemon) into **single-file native binaries** that ships together per os/cpu
+- **npm picks one package** from the user's `os` + `cpu`, so users only download bytes for their platform
+
+```
+  npm i -g @techatnyu/ralph
+         │
+         ▼
+  ┌─ @techatnyu/ralph  (root meta-package) ─────────┐
+  │    bin/ralph    ─ launcher (uname → exec)    │
+  │    bin/ralphd   ─ launcher (uname → exec)    │
+  │    optionalDependencies ↓                     │
+  └───────────────┬───────────────────────────┘
+                  │  npm resolves 1 of 6 by os + cpu
+                  ▼
+  ┌─ @techatnyu/ralph-{os}-{cpu} ─────────────┐
+  │    bin/ralph    ─ compiled binary           │
+  │    bin/ralphd   ─ compiled binary           │
+  │    "os": [...]  "cpu": [...]                 │
+  └───────────────────────────────────────────┘
+
+  6 platforms: darwin / linux / windows  ×  x64 / arm64
+```
 
 <!-- end_slide -->
 
@@ -236,40 +290,103 @@ and so much more!
 
 <!-- jump_to_middle -->
 
-<!-- alignment: center -->
+# npm packaging: build & publish
 
-<span style="color: palette:mauve">Showcase</span>
+> Three scripts, one release. Driven by `scripts/release/`.
 
-# Showcase: Plan view
+- **`bun release:build`:** `Bun.build({ compile })` → 6 targets × 2 binaries = **12 standalone executables**
+- **`bun release:stage`:** lay out `dist/npm/{platform}/` + `dist/npm/root/`, generate `package.json`s and launchers
+- **`bun release:publish`:** publish **platform packages first**, then root, so `optionalDependencies` always resolve
 
-- Trace **PRD → task pick → spec context** in the TUI
-- Call out how **`prd.json`** steers the next session
+```ts +line_numbers
+// scripts/release/shared.ts: single-file native compile
+await Bun.build({
+  entrypoints: [join(REPO_ROOT, "apps/tui/src/cli.ts")],
+  compile: { target: "bun-darwin-arm64", outfile: "ralph" },
+});
+```
+
+```json +line_numbers
+// dist/npm/root/package.json  (generated by stage-npm.ts)
+{
+  "name": "@techatnyu/ralph",
+  "bin": { "ralph": "bin/ralph", "ralphd": "bin/ralphd" },
+  "optionalDependencies": {
+    "@techatnyu/ralph-darwin-arm64": "0.0.1",
+    "@techatnyu/ralph-linux-x64": "0.0.1"
+    // … 4 more platforms
+  }
+}
+```
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# Showcase
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<span style="color: palette:mauve">Showcase</span>
+> **Plan view**
 
-# Showcase: Multiple projects at once
+- **Shape tasks before execution:** define what to build in `prd.json` with clear acceptance criteria
+- **Grounded in spec:** the plan references `SPEC.md` so the agent knows the full picture
+- **One task at a time:** the agent picks the next open task — no ambiguity, no drift
 
-- Flip between workspaces **without losing narrative**
-- Compare **agent state** side-by-side in one surface
+![image:width:70%](assets/plan-view.png)
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# Showcase
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<span style="color: palette:mauve">Showcase</span>
+> **Multiple projects at once**
 
-# Showcase: Execution & Review views
+- **Flip between workspaces** without losing narrative
+- **Compare agent state** side-by-side in one surface
 
-- **Execution** — streaming output, background-friendly runs
-- **Review** — per-session diffs of every file the agent touched
+![image:width:70%](assets/Switch_projects.gif)
+
+<!-- end_slide -->
+
+# Showcase
+
+<!-- list_item_newlines: 1 -->
+
+> **Execution view**
+
+- **Streaming output:** stdout/stderr surfaces live in the TUI
+- **Background-friendly:** detach the TUI without killing the run
+- **Multi-project fan-out:** every active workspace, one stream
+
+![image:width:70%](assets/Execution_view.png)
+
+<!-- end_slide -->
+
+# Showcase
+
+<!-- list_item_newlines: 1 -->
+
+> **Execution view**
+
+- **Streaming output:** stdout/stderr surfaces live in the TUI
+- **Background-friendly:** detach the TUI without killing the run
+- **Multi-project fan-out:** every active workspace, one stream
+
+![image:width:70%](assets/Execution_run1.png)
+
+<!-- end_slide -->
+
+# Showcase
+
+<!-- list_item_newlines: 1 -->
+
+> **Review view**
+
+- **Per-session diffs:** every file the agent touched
+- **Inspect before iterating:** catch drift between runs
+- **Roadmap:** richer tests + approvals inline
+
+![image:width:70%](assets/review-view.png)
 
 <!-- end_slide -->
 
@@ -283,6 +400,8 @@ and so much more!
 - <span style="color: palette:green">Opencode feature parity</span>
   - Manual skill activation
   - General commands: `/reset`, `/undo`, etc.
+- <span style="color: palette:mauve">Better interface</span>
+  - More polished UI/UX
 
 <!-- end_slide -->
 
@@ -296,12 +415,9 @@ and so much more!
 
 <!-- no_footer -->
 
-<span style="color: palette:green">Thank you</span>
-
 # Thanks / Q&A
 
 - Repo: **`TechAtNYU/ralph`**
-- <span style="color: palette:subtext0">We’d love your questions.</span>
 
 <!-- reset_layout -->
 
