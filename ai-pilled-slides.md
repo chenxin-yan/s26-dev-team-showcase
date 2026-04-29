@@ -331,23 +331,29 @@ await Bun.build({
 
 # Showcase
 
+<!-- list_item_newlines: 1 -->
+
 > **Execution view**
 
 - **Streaming output:** stdout/stderr surfaces live in the TUI
 - **Background-friendly:** detach the TUI without killing the run
 - **Multi-project fan-out:** every active workspace, one stream
 
-<!-- column_layout: [1, 1] -->
+![image:width:70%](assets/Execution_view.png)
 
-<!-- column: 0 -->
+<!-- end_slide -->
 
-![](assets/Execution_view.png)
+# Showcase
 
-<!-- column: 1 -->
+<!-- list_item_newlines: 1 -->
 
-![](assets/Execution_run1.png)
+> **Execution view**
 
-<!-- reset_layout -->
+- **Streaming output:** stdout/stderr surfaces live in the TUI
+- **Background-friendly:** detach the TUI without killing the run
+- **Multi-project fan-out:** every active workspace, one stream
+
+![image:width:70%](assets/Execution_run1.png)
 
 <!-- end_slide -->
 
@@ -361,7 +367,7 @@ await Bun.build({
 - **Inspect before iterating:** catch drift between runs
 - **Roadmap:** richer tests + approvals inline
 
-![image:width:50%](assets/review-view.png)
+![image:width:70%](assets/review-view.png)
 
 <!-- end_slide -->
 
