@@ -3,10 +3,6 @@ title: '<span style="color: palette:green">Ralph</span> · Agent orchestration i
 sub_title: "_Dev team showcase — S26_"
 event: "Tech@NYU"
 date: "Spring 2026"
-authors:
-  - "<NAME 1> — <ROLE>"
-  - "<NAME 2> — <ROLE>"
-  - "<NAME 3> — <ROLE>"
 theme:
   name: catppuccin-mocha
   override:
@@ -25,16 +21,14 @@ options:
   list_item_newlines: 2
 ---
 
-# What is Ralph?
+<!-- jump_to_middle -->
 
-<!-- list_item_newlines: 1 -->
+<!-- alignment: center -->
 
-> [!tip]
-> A **daemon-backed** TUI so agents keep working after you detach.
+# Live demo
 
-- <span style="color: palette:sky">Orchestration</span> — one loop across workspaces, not one-off chats
-- <span style="color: palette:green">Resilience</span> — `ralphd` owns runs; the TUI is a thin client
-- <span style="color: palette:yellow">Visibility</span> — single dashboard for every project in flight
+- Spin up a **Ralph loop** with a pre-baked PRD
+- Build a habit tracking web app
 
 <!-- end_slide -->
 
@@ -49,16 +43,16 @@ options:
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# What is Ralph, the TUI
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<span style="color: palette:yellow">Live</span>
+> [!tip]
+> A **daemon-backed** TUI so agents keep working after you detach.
 
-# Live demo
-
-- Spin up a **Ralph loop** with a pre-baked PRD
-- Watch **plan → run → log** without babysitting the TUI
+- <span style="color: palette:sky">Orchestration</span> — one loop across workspaces, not one-off chats
+- <span style="color: palette:green">Resilience</span> — `ralphd` owns runs; the TUI is a thin client
+- <span style="color: palette:yellow">Visibility</span> — single dashboard for every project in flight
 
 <!-- end_slide -->
 
