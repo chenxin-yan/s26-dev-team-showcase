@@ -62,81 +62,51 @@ options:
 
 <!-- end_slide -->
 
-# Problems with agentic coding today
+# Opencode problem → Ralph solution
 
-| <span style="color: palette:sky">Lens</span> | <span style="color: palette:text">What goes wrong</span> |
-| -------------------------------------------- | -------------------------------------------------------- |
-| **Tooling**                                  | Server + TUI fused — quit the UI, kill the agent         |
-| **Tooling**                                  | Multi-repo work — context scattered across windows       |
-| **Methodology**                              | Mega-sessions — context rot and weaker verification      |
-| **Methodology**                              | Vague / declarative goals — many paths, easy drift       |
+<!-- column_layout: [1, 1] -->
 
-<!-- end_slide -->
+<!-- column: 0 -->
 
-# Opencode pain #1: TUI = agent lifetime
+> **Problem**
 
-> [!warning]
-> The agent's lifetime is tied to the **foreground TUI** — no true background mode.
+- In opencode, the **TUI and agent lifetime are tied together**
+- Closing the UI can **kill long-running work**
+- Multi-project workflows get **scattered across windows and sessions**
 
-- Disconnect or close the UI → **run stops**
-- Hard to pair a **lightweight client** with long-running work
+<!-- column: 1 -->
 
-<!-- end_slide -->
+> **Solution**
 
-# Our fix: TUI + daemon
+- Ralph **decouples the TUI from the daemon**
+- Agents keep running **in the background**
+- One TUI gives a **single view across all active projects**
 
-> [!tip]
-> **Split control plane from data plane** — `ralphd` keeps state; the TUI attaches when you want.
-
-- <span style="color: palette:green">Unix socket</span> `~/.ralph/ralphd.sock` — fast local IPC
-- <span style="color: palette:green">SQLite</span> `~/.ralph/state.sqlite` — durable orchestration state
-- **CLI** for health checks without opening the UI
-
-```bash +line_numbers
-bun run src/cli.ts daemon start
-bun run src/cli.ts daemon health
-bun run src/cli.ts daemon stop
-```
+<!-- reset_layout -->
 
 <!-- end_slide -->
 
-# Opencode pain #2: multi-project workflow
+# Methodology problem → Ralph solution
 
-> [!warning]
-> Every repo becomes its **own island** of terminals, tabs, and agent state.
+<!-- column_layout: [1, 1] -->
 
-- Heavy **context switching** between codebases
-- No **single pane of glass** for “what is every agent doing right now?”
+<!-- column: 0 -->
 
-<!-- end_slide -->
+> **Problem**
 
-# Our fix: one TUI for all projects
+- Giant sessions create **too much noise**
+- Too much context can mean **worse performance and more hallucination**
+- Goal-only prompting leaves agents **too much room to drift**
 
-> [!tip]
-> **One mental model** everywhere — same plan / execute / review flow per workspace.
+<!-- column: 1 -->
 
-- Unified **dashboard** across Ralph workspaces
-- **At-a-glance** status: what’s running, what’s blocked, what’s next
+> **Solution**
 
-<!-- end_slide -->
+- Ralph uses **one task per session**
+- Work is grounded in **structured artifacts on disk**
+- `PROMPT.md`, `SPEC.md`, `prd.json`, and `progress.md` make the workflow **explicit and reproducible**
 
-# Methodology pain #1: the context problem
-
-> [!caution]
-> Stuffing everything into **one session** trades convenience for **signal-to-noise**.
-
-- More tokens → more **noise** → more **hallucination risk**
-- Harder to **verify**, **review**, and **hand off** cleanly
-
-<!-- end_slide -->
-
-# Methodology pain #2: declarative prompts drift
-
-> [!caution]
-> “Build the feature” has **many valid implementations** — agents wander without guardrails.
-
-- Plan-only / goal-only prompts → **under-constrained** search space
-- Without **task boundaries**, reviews get fuzzy
+<!-- reset_layout -->
 
 <!-- end_slide -->
 
