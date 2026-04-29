@@ -169,38 +169,49 @@ options:
 # The daemon
 
 > [!note]
-> **`ralphd`** is the source of truth for sessions, sockets, and persistence.
+> **`ralphd`:** a long-running daemon that is the single source of truth for all agent work.
 
-| Resource | Path / role                                        |
-| -------- | -------------------------------------------------- |
-| Socket   | `~/.ralph/ralphd.sock`                             |
-| State DB | `~/.ralph/state.sqlite`                            |
-| Role     | Spawn runs, stream output, survive without the TUI |
-
-<!-- end_slide -->
-
-# Inside `ralphd`: one runtime, many sessions
-
-> **N workspaces · N agents · 1 shared runtime**
-
-- Less memory, no port collisions
-- Scales to as many agents as you want
+- **Omnipotent across directories:** todo apps, trip planners, any project you've ever worked on — `ralphd` manages them all
+- **Owns the agent loop:** execution continues whether or not a UI is attached
+- **Persists state** in `~/.ralph/state.sqlite`, communicates over `~/.ralph/ralphd.sock`
 
 ```
-  workspace A ─┐
-                │
-  workspace B ─┼─→  ralphd ─→  opencode
-                │     (tags by directory)
-  workspace N ─┘
+  ┌─ ralphd (long-running daemon) ─────────────────────────┐
+  │                                                         │
+  │   ~/todo-app ──┐                                        │
+  │                │                                        │
+  │   ~/planner ───┼──→  agent loop  ──→  state.sqlite      │
+  │                │      (per dir)                          │
+  │   ~/client  ───┘                                        │
+  │                                                         │
+  │   ralphd.sock  ←── TUIs subscribe here                  │
+  └─────────────────────────────────────────────────────────┘
 ```
 
 <!-- end_slide -->
 
-# Streaming service
+# The TUI
 
-- **Background execution:** detach the TUI without losing the agent
-- **Live log fan-in:** stdout/stderr surfaces in the client
-- **Multi-project fan-out:** same pipeline for every workspace
+> [!note]
+> **The TUI is purely a UI layer.** It holds no state — it subscribes to `ralphd` over a socket and renders what it's told.
+
+- **Stateless client:** all information comes from the daemon, the TUI just displays it
+- **Multiplexable:** spin up N TUIs on the same project — the daemon doesn't care
+- **Disposable:** close the TUI and the agent keeps running. Reattach whenever you want
+
+```
+                ┌─── TUI (kitchen laptop) ───┐
+                │    subscribe ↓              │
+                └────────────────────────────-┘
+                          │
+  ralphd.sock ◄───────────┼────────────────────┐
+       │                  │                    │
+       ▼                  │                    │
+  ┌─ ralphd ─┐    ┌─── TUI (desk) ───┐   ┌─── TUI (ssh) ───┐
+  │ agent loop│    │   subscribe ↓    │   │   subscribe ↓    │
+  │ (running) │    └──────────────────┘   └──────────────────┘
+  └───────────┘
+```
 
 <!-- end_slide -->
 
@@ -286,33 +297,30 @@ await Bun.build({
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# Showcase
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<!-- no_footer -->
+> **Plan view**
 
-<span style="color: palette:mauve">Showcase</span>
+- **Shape tasks before execution:** define what to build in `prd.json` with clear acceptance criteria
+- **Grounded in spec:** the plan references `SPEC.md` so the agent knows the full picture
+- **One task at a time:** the agent picks the next open task — no ambiguity, no drift
 
-# Showcase: Plan view
-
-- Trace **PRD → task pick → spec context** in the TUI
-- Call out how **`prd.json`** steers the next session
+![image:width:70%](assets/plan-view.png)
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# Showcase
 
-<!-- alignment: center -->
+<!-- list_item_newlines: 1 -->
 
-<!-- no_footer -->
+> **Multiple projects at once**
 
-<span style="color: palette:mauve">Showcase</span>
+- **Flip between workspaces** without losing narrative
+- **Compare agent state** side-by-side in one surface
 
-# Showcase: Multiple projects at once
-
-- Flip between workspaces **without losing narrative**
-- Compare **agent state** side-by-side in one surface
+![image:width:70%](assets/Switch_projects.gif)
 
 <!-- end_slide -->
 
