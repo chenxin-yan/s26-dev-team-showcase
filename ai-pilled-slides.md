@@ -165,11 +165,18 @@ options:
 
 # Inside `ralphd`: one runtime, many sessions
 
-> [!tip]
-> _n_ agents, _n_ repos — **one** opencode process.
+> **N workspaces · N agents · 1 shared runtime**
 
-- We share a single opencode runtime across every workspace
-- Each instance gets its own event stream, tagged by directory
+- Less memory, no port collisions
+- Scales to as many agents as you want
+
+```
+  workspace A ─┐
+                │
+  workspace B ─┼─→  ralphd ─→  opencode
+                │     (tags by directory)
+  workspace N ─┘
+```
 
 <!-- end_slide -->
 
