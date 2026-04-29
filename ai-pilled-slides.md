@@ -18,7 +18,7 @@ theme:
       font_size: 2
     intro_slide:
       title:
-        font_size: 3
+        font_size: 2
       subtitle:
         colors:
           foreground: palette:lavender
@@ -235,6 +235,28 @@ options:
 
 <!-- end_slide -->
 
+# CLI
+
+The Ralph CLI is built on `@crustjs/core` and speaks JSON-RPC to `ralphd` over a Unix socket. It is completely stateless, every meaningful operation is available as a command with `--json` output, so the same tool works for interactive use and CI/CD pipelines.
+
+| Command               | What it does                                             |
+| --------------------- | -------------------------------------------------------- |
+| `ralph`               | Launch the TUI (auto-connects to `ralphd`)               |
+| `ralph setup`         | Guided first-time setup + model picker                   |
+| `ralph doctor`        | Check prerequisites (OpenCode, auth, daemon)             |
+| `ralph daemon start`  | Start `ralphd` in the background (idempotent)            |
+| `ralph daemon submit` | Submit a prompt job to a workspace instance              |
+| `ralph provider list` | Show connected/disconnected providers                    |
+| `ralph model set`     | Select active model (e.g. `anthropic/claude-sonnet-4-5`) |
+
+and so much more!
+
+- <span style="color: palette:green">Interactive</span> — TUI when run naked; commands for scripting
+- <span style="color: palette:sky">`--json` everywhere</span> — every command supports machine-readable output
+- <span style="color: palette:peach">Daemon-centric</span> — CLI is stateless; all persistent state lives in `ralphd`
+
+<!-- end_slide -->
+
 # npm packaging
 
 > [!tip]
@@ -265,30 +287,6 @@ options:
 ```
 
 <!-- end_slide -->
-
-# CLI
-
-The Ralph CLI is built on `@crustjs/core` and speaks JSON-RPC to `ralphd` over a Unix socket. It is completely stateless, every meaningful operation is available as a command with `--json` output, so the same tool works for interactive use and CI/CD pipelines.
-
-| Command | What it does |
-| ------- | ------------ |
-| `ralph` | Launch the TUI (auto-connects to `ralphd`) |
-| `ralph setup` | Guided first-time setup + model picker |
-| `ralph doctor` | Check prerequisites (OpenCode, auth, daemon) |
-| `ralph daemon start` | Start `ralphd` in the background (idempotent) |
-| `ralph daemon submit` | Submit a prompt job to a workspace instance |
-| `ralph provider list` | Show connected/disconnected providers |
-| `ralph model set` | Select active model (e.g. `anthropic/claude-sonnet-4-5`) |
-
-and so much more!
-
-- <span style="color: palette:green">Interactive</span> — TUI when run naked; commands for scripting
-- <span style="color: palette:sky">`--json` everywhere</span> — every command supports machine-readable output
-- <span style="color: palette:peach">Daemon-centric</span> — CLI is stateless; all persistent state lives in `ralphd`
-
-<!-- end_slide -->
-
-<!-- jump_to_middle -->
 
 # npm packaging: build & publish
 
