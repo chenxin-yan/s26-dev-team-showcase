@@ -212,6 +212,28 @@ options:
 
 <!-- end_slide -->
 
+# CLI
+
+The Ralph CLI is built on `@crustjs/core` and speaks JSON-RPC to `ralphd` over a Unix socket. It is completely stateless, every meaningful operation is available as a command with `--json` output, so the same tool works for interactive use and CI/CD pipelines.
+
+| Command | What it does |
+| ------- | ------------ |
+| `ralph` | Launch the TUI (auto-connects to `ralphd`) |
+| `ralph setup` | Guided first-time setup + model picker |
+| `ralph doctor` | Check prerequisites (OpenCode, auth, daemon) |
+| `ralph daemon start` | Start `ralphd` in the background (idempotent) |
+| `ralph daemon submit` | Submit a prompt job to a workspace instance |
+| `ralph provider list` | Show connected/disconnected providers |
+| `ralph model set` | Select active model (e.g. `anthropic/claude-sonnet-4-5`) |
+
+and so much more!
+
+- <span style="color: palette:green">Interactive</span> — TUI when run naked; commands for scripting
+- <span style="color: palette:sky">`--json` everywhere</span> — every command supports machine-readable output
+- <span style="color: palette:peach">Daemon-centric</span> — CLI is stateless; all persistent state lives in `ralphd`
+
+<!-- end_slide -->
+
 <!-- jump_to_middle -->
 
 <!-- alignment: center -->
@@ -253,12 +275,14 @@ options:
 
 # What's next
 
-> [!note]
-> Honest backlog — the **next layer of polish**, not vapor.
-
-- **Review surface** — richer diffs, tests, approvals inline
-- **Prompt injection mid-run** — steer without restarting the loop
-- **Opencode parity** — Q&A flows, manual skill activation
+- <span style="color: palette:peach">Better review view</span>
+  - Currently: just viewing diffs
+  - Want: **interactive rebase**-style approvals inline
+- <span style="color: palette:sky">On-demand prompts during execution</span>
+  - Steer the agent **mid-run** without restarting the loop
+- <span style="color: palette:green">Opencode feature parity</span>
+  - Manual skill activation
+  - General commands: `/reset`, `/undo`, etc.
 
 <!-- end_slide -->
 
