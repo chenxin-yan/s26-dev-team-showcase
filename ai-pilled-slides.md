@@ -139,32 +139,19 @@ options:
 
 <!-- end_slide -->
 
-# Product overview: Plan → Execute → Review
+# Product overview: structured agent workflow
 
-<!-- column_layout: [1, 1, 1] -->
+> [!tip]
+> Agentic coding needs a workflow: **define the work, manage the work, review the work**.
 
-<!-- column: 0 -->
+| <span style="color: palette:sky">Tab</span> | <span style="color: palette:text">Product job</span> |
+| ------------------------------------------- | ---------------------------------------------------- |
+| **Plan**                                    | Turn an idea / PRD into `SPEC.md` + `prd.json`       |
+| **Execute**                                 | Convert plan files into visible task workstreams     |
+| **Review**                                  | Inspect output, then accept, revise, or continue     |
 
-### <span style="color: palette:sapphire">Plan</span>
-
-- Shape **tasks** + acceptance in `prd.json`
-- Ground truth in **`SPEC.md`**
-
-<!-- column: 1 -->
-
-### <span style="color: palette:green">Execute</span>
-
-- **`ralphd`** drives the loop
-- **Streaming logs** while work runs in the background
-
-<!-- column: 2 -->
-
-### <span style="color: palette:peach">Review</span>
-
-- Inspect **output** before the next iteration
-- **Roadmap:** richer diff / test surfacing in-review
-
-<!-- reset_layout -->
+- <span style="color: palette:lavender">From vague prompt → scoped tasks → reviewed changes</span>
+- The human keeps control while the agent moves through scoped tasks
 
 <!-- end_slide -->
 

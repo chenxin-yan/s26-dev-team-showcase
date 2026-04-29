@@ -24,10 +24,17 @@
 
 ### Product overview (**Kevin**)
 
-- diagram:
-- Plan
-- execute
-- review
+Product-wise, the important framing is that Ralph is not just another coding agent UI. The goal is to turn agentic coding into a structured workflow. If an agent can run for a long time, touch real files, and continue across sessions, the user needs more than a chat box. They need a way to define the work, manage the work, and review the work.
+
+That is why Ralph is organized around three main tabs: Plan, Execute, and Review.
+
+Plan is where the user turns a high-level idea or PRD into concrete project artifacts. Instead of starting with an open-ended instruction like “build this feature,” Ralph helps move the project into a shared `SPEC.md` and a task-focused `prd.json`.
+
+Execute is where those plan files become active workstreams. The user can see what is currently running, what state each task is in, and where the agent is in the process. This turns agent execution from a black-box chat into something observable and manageable.
+
+Review is where the user comes back into the loop. They inspect the output, understand what changed, and decide whether the work should be accepted, revised, or continued into the next task.
+
+So the product flow is simple: define the work, manage the work, and review the work. Ralph gives structure to agentic coding so the agent can move fast without the human losing control of the process.
 
 ### Showcases (**Alex** & **Fahim**)
 
