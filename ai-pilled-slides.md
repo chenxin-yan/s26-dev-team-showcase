@@ -238,16 +238,39 @@ options:
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
+# Showcase
 
-<!-- alignment: center -->
+> **Execution view**
 
-<span style="color: palette:mauve">Showcase</span>
+- **Streaming output:** stdout/stderr surfaces live in the TUI
+- **Background-friendly:** detach the TUI without killing the run
+- **Multi-project fan-out:** every active workspace, one stream
 
-# Showcase: Execution & Review views
+<!-- column_layout: [1, 1] -->
 
-- **Execution** — streaming output, background-friendly runs
-- **Review** — per-session diffs of every file the agent touched
+<!-- column: 0 -->
+
+![](assets/Execution_view.png)
+
+<!-- column: 1 -->
+
+![](assets/Execution_run1.png)
+
+<!-- reset_layout -->
+
+<!-- end_slide -->
+
+# Showcase
+
+<!-- list_item_newlines: 1 -->
+
+> **Review view**
+
+- **Per-session diffs:** every file the agent touched
+- **Inspect before iterating:** catch drift between runs
+- **Roadmap:** richer tests + approvals inline
+
+![image:width:50%](assets/review-view.png)
 
 <!-- end_slide -->
 
