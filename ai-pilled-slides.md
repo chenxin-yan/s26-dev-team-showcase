@@ -8,7 +8,9 @@ theme:
   override:
     footer:
       style: progress_bar
-      character: "▌"
+      character: "▁"
+      colors:
+        foreground: palette:lavender
     slide_title:
       separator: true
       padding_top: 1
@@ -35,11 +37,18 @@ options:
 # Ralph, the methodology
 
 > [!important]
-> **Small sessions, tight tasks** — less noise, fewer hallucinations, cleaner handoffs.
+> **One task per session.** Read state from disk → execute → write state back → loop.
 
-- <span style="color: palette:lavender">Plan → execute → review</span> as the default rhythm
-- **One task per session** — select from `prd.json`, ship, signal completion
-- **`progress.md` append-only** — each iteration leaves breadcrumbs for the next
+- <span style="color: palette:lavender">Files on disk are the contract</span> — `SPEC.md`, `prd.json`, `progress.md` are the agent's only memory between sessions
+- <span style="color: palette:green">Each iteration starts fresh</span> — no carry-over context; the agent rebuilds state by reading the files
+
+## **The loop — every iteration:**
+
+1. **Read** `SPEC.md`, `prd.json`, `progress.md` to rebuild context
+2. **Pick** one open task from `prd.json` (where `passed: false`)
+3. **Implement & verify** — tests, type checks, lint
+4. **Append** an entry to `progress.md`, mark the task `passed`, commit
+5. **Signal** `RALPH_TASK_COMPLETE` → next iteration, fresh context
 
 <!-- end_slide -->
 
@@ -96,9 +105,10 @@ options:
 
 > **Solution**
 
-- Ralph uses **one task per session**
-- Work is grounded in **structured artifacts on disk**
-- `PROMPT.md`, `SPEC.md`, `prd.json`, and `progress.md` make the workflow **explicit and reproducible**
+- **One task per session** — isolated context, no bloat, fewer hallucinations
+- **Pre-planned, actionable steps** in `prd.json` — execution is instruction-following, not reasoning
+- **Plan with a smart model, execute with a cheap one** — same quality, lower cost
+- Workflow grounded in `PROMPT.md`, `SPEC.md`, `prd.json`, `progress.md` — **explicit and reproducible**
 
 <!-- reset_layout -->
 

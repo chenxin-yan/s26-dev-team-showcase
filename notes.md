@@ -4,9 +4,9 @@
 
 - overview of project (**Cyan**)
   - agent orchestration TUI
+- live demo by starting a ralph loop with PRD pre-made (**Cyan**)
 - brief intro of the members
 - introduction to ralph, the methodology (**Frank**)
-- live demo by starting a ralph loop with PRD pre-made (**Cyan**)
   - some next.js app
 
 ### Problems & solutions (**Asia**)
